@@ -7,6 +7,8 @@ use Sabre\DAV\Client;
 class ScieboClient extends Client
 {
     /**
+     * Constructor.
+     *
      * @param string $node     The node within the Sciebo mesh, e.g. "rwth-aachen"
      * @param string $username The name of the user accessing the storage
      * @param string $password The password of the user accessing the storage
