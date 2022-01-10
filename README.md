@@ -29,6 +29,8 @@ use Joschaefer\Flysystem\Sciebo\ScieboAdapter;
 use Joschaefer\Flysystem\Sciebo\ScieboClient;
 use League\Flysystem\Filesystem;
 
+include __DIR__ . '/vendor/autoload.php';
+
 $client = new ScieboClient('rwth-aachen', 'ABC123@rwth-aachen.de', 'your-secret-app-passcode');
 $adapter = new ScieboAdapter($client);
 $filesystem = new Filesystem($adapter);
@@ -93,7 +95,7 @@ return [
 
         'sciebo' => [
             'driver' => 'sciebo',
-            'node' => env('SC_NODE', ''),
+            'node' => env('SCIEBO_NODE', ''),
             'username' => env('SCIEBO_USERNAME', ''),
             'password' => env('SCIEBO_PASSWORD', ''),
             'prefix' => env('SCIEBO_PREFIX'),
