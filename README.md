@@ -1,5 +1,5 @@
 # Flysystem adapter for the Sciebo API
-This package contains a [Flysystem v2](https://flysystem.thephpleague.com/v2/docs/) adapter for [Sciebo](https://hochschulcloud.nrw), a non-commercial file hosting service based on ownCloud provided by the universities of the state of North Rhine-Westphalia (Germany). The API is based on the WebDAV protocol.
+This package contains a [Flysystem v3](https://flysystem.thephpleague.com/docs/) adapter for [Sciebo](https://hochschulcloud.nrw), a non-commercial file hosting service based on ownCloud provided by the universities of the state of North Rhine-Westphalia (Germany). The API is based on the WebDAV protocol.
 
 ## Installation
 
@@ -73,8 +73,16 @@ class AppServiceProvider extends ServiceProvider
         // ...
         
         Storage::extend('sciebo', function ($app, $config) {
-            $client = new ScieboClient($config['node'], $config['username'], $config['password']);
-            return new Filesystem(new ScieboAdapter($client, $config['prefix']));
+            $adapter = new ScieboAdapter(
+                new ScieboClient($config['node'], $config['username'], $config['password']),
+                $config['prefix']
+            );
+
+            return new FilesystemAdapter(
+                new Filesystem($adapter, $config),
+                $adapter,
+                $config
+            );
         });
     }
 }
