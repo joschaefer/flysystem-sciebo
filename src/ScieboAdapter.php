@@ -6,21 +6,19 @@ use League\Flysystem\WebDAV\WebDAVAdapter;
 
 class ScieboAdapter extends WebDAVAdapter
 {
-    protected $client;
+    protected ScieboClient $client;
 
-    /**
-     * Constructor.
-     *
-     * @param ScieboClient $client
-     * @param null         $prefix
-     * @param bool         $useStreamedCopy
-     */
-    public function __construct(ScieboClient $client, $prefix = null, $useStreamedCopy = true)
-    {
-        parent::__construct($client, 'remote.php/webdav/' . $prefix, $useStreamedCopy);
+    public function __construct(
+        ScieboClient $client,
+        string $prefix = '',
+        string $visibilityHandling = self::ON_VISIBILITY_THROW_ERROR,
+        bool $manualCopy = false,
+        bool $manualMove = false
+    ) {
+        parent::__construct($client, $prefix, $visibilityHandling, $manualCopy, $manualMove);
     }
 
-    public function getUrl(string $path)
+    public function getUrl(string $path): ?string
     {
         return $this->client->getPublicSharingUrl($path);
     }

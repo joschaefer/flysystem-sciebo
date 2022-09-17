@@ -8,6 +8,8 @@ use Sabre\DAV\Client;
 
 class ScieboClient extends Client
 {
+    protected string $node;
+
     /**
      * Constructor.
      *
@@ -17,8 +19,10 @@ class ScieboClient extends Client
      */
     public function __construct(string $node, string $username, string $password)
     {
+        $this->node = sprintf('https://%s.sciebo.de/', $node);
+
         parent::__construct([
-            'baseUri' => sprintf('https://%s.sciebo.de/', $node),
+            'baseUri' => $this->node . 'remote.php/webdav/',
             'userName' => $username,
             'password' => $password,
         ]);
@@ -27,7 +31,7 @@ class ScieboClient extends Client
     public function getPublicSharingUrl(string $path): ?string
     {
         $guzzle = new HttpClient([
-            'base_uri' => $this->baseUri,
+            'base_uri' => $this->node,
             'auth' => explode(':', $this->curlSettings['10005']),
             'headers' => ['OCS-APIRequest' => 'true'],
         ]);

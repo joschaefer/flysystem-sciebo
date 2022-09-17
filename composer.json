@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "php": ">=7.1",
+        "php": ">=8.0",
         "league/flysystem-webdav": "^3.0",
         "guzzlehttp/guzzle": "^7.0"
     },
